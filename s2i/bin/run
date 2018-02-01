@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Command line arguments given to this script
+args="$*"
+# Global S2I variable setup
+source `dirname "$0"`/s2i-setup
+exec ${MULE_ROOT}/bin/mule $args ${MULE_ARGS}

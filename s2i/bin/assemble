@@ -1,0 +1,49 @@
+#!/bin/bash -e
+#
+# S2I assemble script for the 'echarish/mule-s2i-image' image.
+# The 'assemble' script builds your application source so that it is ready to run.
+#
+# For more information refer to the documentation:
+#	https://github.com/openshift/source-to-image/blob/master/docs/builder_image.md
+#
+
+# If the 'echarish/mule-s2i-image' assemble script is executed with the '-h' flag, print the usage.
+if [[ "$1" == "-h" ]]; then
+	exec /usr/libexec/s2i/usage
+fi
+
+# Restore artifacts from the previous build (if they exist).
+#
+if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
+  echo "---> Restoring build artifacts..."
+  mv /tmp/artifacts/. ./
+fi
+
+echo "---> Installing application source..."
+cp -Rf /tmp/src/. ./
+
+echo "---> Building application from source..."
+# TODO: Add build steps for your application, eg npm install, bundle install, pip install, etc.
+echo "=================================================================="
+echo "Starting S2I Java Build ....."
+echo "S2I source build with plain binaries detected"
+
+
+# Assuming that the source already contains compiled artefacts
+echo "Replacing conf file"
+mv /opt/mule/conf/wrapper.conf /opt/mule/conf/wrapper_bk_$(date '+%Y-%m-%d-%H-%M-%S').conf
+cp /opt/muleprojects/conf/wrapper.conf /opt/mule/conf/
+ls /opt/mule/conf
+echo "wrapper.conf replaced with latest "
+
+echo "Copying binaries from /opt/muleprojects/apps to /opt/mule/apps/ ..."
+cp /opt/muleprojects/apps/*.zip /opt/mule/apps/
+echo "Copy to apps completed"
+ls /opt/mule/apps
+
+echo "Copying binaries from /opt/muleprojects/domains to /opt/mule/domains/ ..."
+cp /opt/muleprojects/domains/*.zip /opt/mule/domains/
+echo "Copy to domains completed"
+ls /opt/mule/domains
+
+echo "... done"
