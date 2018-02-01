@@ -25,6 +25,8 @@ image. Place your project files here
 s2i build deployments/ echarish/mule-base-builder echarish/mule-s2i-app
 ```
 
+###### for more details on s2i, check opensift [https://github.com/openshift/source-to-image](https://github.com/openshift/source-to-image)
+
 ## Step 3
 ### running the mule project Image
 ```
@@ -33,4 +35,4 @@ docker run --rm -p 8081:8081 echarish/mule-s2i-app
 
 ## Step 4
 ### access the running apps
-http://localhost:8081/s2idemo
+[http://localhost:8080/s2idemo](http://localhost:8080/s2idemo)
