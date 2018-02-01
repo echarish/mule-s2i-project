@@ -30,6 +30,4 @@ docker run --rm -p 8081:8081 echarish/mule-s2i-app
 ```
 
 #Step 4 access the running apps
-```
 http://localhost:8081/s2idemo
-```
